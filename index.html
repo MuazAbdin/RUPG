@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="style.css" />
     <script
       src="https://code.jquery.com/jquery-3.7.1.js"
       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -14,8 +16,13 @@
       crossorigin="anonymous"
       defer
     ></script>
-    <link rel="stylesheet" href="main.css" />
-    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"
+      defer
+    ></script>
+    <script src="APIManager.js" defer></script>
+    <script src="Renderer.js" defer></script>
+    <script src="main.js" defer></script>
     <title>Random User Page</title>
   </head>
   <body>
@@ -48,7 +55,7 @@
       </nav>
     </header>
     <main class="user">
-      <section class="user-item user-details c-flex">
+      <!-- <section class="user-item user-details c-flex">
         <div class="img-container c-flex">
           <img src="./assets/logo.png" alt="Aser Avatar" />
         </div>
@@ -68,7 +75,7 @@
               </p>
               <span class="double-quotes">&#8221;</span>
             </div>
-            <footer>— Aldous Huxley, <cite>Brave New World</cite></footer>
+            <footer>— Kanye West, <cite>Kanye as a Service</cite></footer>
           </blockquote>
         </article>
         <article class="pokemon c-flex">
@@ -101,8 +108,85 @@
           <li class="friend-item">fname lname</li>
           <li class="friend-item">fname lname</li>
         </ol>
-      </section>
+      </section> -->
     </main>
     <footer class="body-footer">Designed by: Muaz Abdin</footer>
+
+    <!-- ### TEMPLATES ### -->
+    <script type="text/x-handlebars-template" id="user-details-template">
+      <section class="user-item user-details c-flex">
+        <div class="img-container c-flex">
+          <img src="{{user.picture}}" alt="User Image" />
+        </div>
+        <div class="name-address">
+          {{user.name}}
+          <br />
+          {{user.state}},
+          {{user.city}}
+        </div>
+      </section>
+    </script>
+
+    <script type="text/x-handlebars-template" id="quote-template">
+      <article class="quote">
+        <blockquote cite="https://api.kanye.rest">
+          <div class="c-flex">
+            <span class="double-quotes">&#8220;</span>
+            <p>
+              {{quote}}
+            </p>
+            <span class="double-quotes">&#8221;</span>
+          </div>
+          <footer>— Kanye West, <cite>Kanye as a Service</cite></footer>
+        </blockquote>
+      </article>
+    </script>
+
+    <script type="text/x-handlebars-template" id="pokemon-template">
+      <article class="pokemon c-flex">
+        <div class="img-container c-flex">
+          <img src="{{pokemon.picture}}" alt="Aser Avatar" />
+        </div>
+        {{pokemon.name}}
+      </article>
+    </script>
+
+    <script type="text/x-handlebars-template" id="meat-template">
+      <article class="meat c-flex">
+        <i class="fa-solid fa-circle-info fa-shake"></i>
+        <p>
+          {{meat}}
+        </p>
+      </article>
+    </script>
+
+    <script type="text/x-handlebars-template" id="user-card-template">
+      <section class="user-item user-card">
+        {{> quote}}
+        {{> pokemon}}
+        {{> meat}}
+      </section>
+    </script>
+
+    <script type="text/x-handlebars-template" id="user-friends-template">
+      <section class="user-item user-friends">
+        <h2 class="friends-title title">
+          Friends
+          <i class="fa-solid fa-angles-right"></i>
+        </h2>
+        <ol class="friends-list">
+          {{#each friends}}
+            <li class="friend-item">{{this}}</li>
+          {{/each}}
+        </ol>
+      </section>
+    </script>
+
+    <script type="text/x-handlebars-template" id="main-template">
+      {{> userDetails}}
+      {{> userCard}}
+      {{> userFriends}}
+    </script>
+    <!-- ################# -->
   </body>
 </html>

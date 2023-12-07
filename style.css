@@ -55,6 +55,7 @@ body {
 }
 
 .img-container > img {
+  border-radius: 50%;
   display: block;
   height: 95%;
   padding: 5px;
