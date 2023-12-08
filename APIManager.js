@@ -1,6 +1,6 @@
 class APIManager {
   /* Attributes */
-  #data;
+  #data = {};
 
   constructor() {
     this.#data = {};
@@ -8,7 +8,6 @@ class APIManager {
 
   /* Private methods */
   #handelRandomUserData(results) {
-    // console.log(results);
     this.#data.friends = [];
     results.forEach((user, idx) => {
       if (idx === 0) {

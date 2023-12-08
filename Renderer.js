@@ -7,7 +7,9 @@ class Renderer {
     this.#registerHelpers();
     this.#registerPartials();
     this.#mainTemplate = Handlebars.compile($("#main-template").html());
-    this.#headerTemplate = null;
+    this.#headerTemplate = Handlebars.compile(
+      $("#saved-users-template").html()
+    );
   }
 
   /* Private methods */
@@ -30,6 +32,14 @@ class Renderer {
   /* Public Methods -The API- */
   render(data) {
     $(".user").empty();
+    $(".user").css("grid-template-columns", "5fr 2fr 3fr");
     $(".user").append(this.#mainTemplate(data));
+  }
+
+  renderUsersList(users) {
+    const names = [];
+    for (let key in users) names.push({ id: key, name: users[key].user.name });
+    $(".saved-users").empty();
+    $(".saved-users").append(this.#headerTemplate({ names }));
   }
 }

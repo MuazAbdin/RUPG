@@ -22,6 +22,7 @@
     ></script>
     <script src="APIManager.js" defer></script>
     <script src="Renderer.js" defer></script>
+    <script src="Controller.js" defer></script>
     <script src="main.js" defer></script>
     <title>Random User Page</title>
   </head>
@@ -35,81 +36,19 @@
       </div>
       <nav class="navbar">
         <ul class="nav-list">
-          <li class="nav-list-item c-flex">
+          <li class="nav-list-item c-flex nav-list-item__save">
             <i class="fa-solid fa-floppy-disk"></i>
             &nbsp; SAVE USER
           </li>
           <li class="nav-list-item c-flex nav-list-item__users">
             <i class="fa-solid fa-angles-down"></i>
             &nbsp; USERS LIST
-            <div class="saved-users">
-              <ol class="users-list">
-                <li class="users-list-item">user</li>
-                <li class="users-list-item">user</li>
-                <li class="users-list-item">user</li>
-                <li class="users-list-item">user</li>
-              </ol>
-            </div>
+            <div class="saved-users"></div>
           </li>
         </ul>
       </nav>
     </header>
-    <main class="user">
-      <!-- <section class="user-item user-details c-flex">
-        <div class="img-container c-flex">
-          <img src="./assets/logo.png" alt="Aser Avatar" />
-        </div>
-        <div class="name-address">
-          Muaz Abdeen <br />
-          Palestine, Jeruslaem
-        </div>
-      </section>
-      <section class="user-item user-card">
-        <article class="quote">
-          <blockquote cite="https://www.huxley.net/bnw/four.html">
-            <div class="c-flex">
-              <span class="double-quotes">&#8220;</span>
-              <p>
-                Words can be like X-rays, if you use them properly—they'll go
-                through anything. You read and you're pierced.
-              </p>
-              <span class="double-quotes">&#8221;</span>
-            </div>
-            <footer>— Kanye West, <cite>Kanye as a Service</cite></footer>
-          </blockquote>
-        </article>
-        <article class="pokemon c-flex">
-          <div class="img-container c-flex">
-            <img src="./assets/logo.png" alt="Aser Avatar" />
-          </div>
-          POKEMON
-        </article>
-        <article class="meat c-flex">
-          <i class="fa-solid fa-circle-info fa-shake"></i>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
-            repellendus eligendi hic optio tempora quod ipsum, sint iste, iusto
-            sed voluptate quo vel nam suscipit. Corrupti enim optio quas id.
-          </p>
-        </article>
-      </section>
-      <section class="user-item user-friends">
-        <h2 class="friends-title title">
-          Friends
-          <i class="fa-solid fa-angles-right"></i>
-        </h2>
-        <ol class="friends-list">
-          <li class="friend-item">fname lname</li>
-          <li class="friend-item">fname lname</li>
-          <li class="friend-item">fname lname</li>
-          <li class="friend-item">fname lname</li>
-          <li class="friend-item">fname lname</li>
-          <li class="friend-item">fname lname</li>
-          <li class="friend-item">fname lname</li>
-          <li class="friend-item">fname lname</li>
-        </ol>
-      </section> -->
-    </main>
+    <main class="user"></main>
     <footer class="body-footer">Designed by: Muaz Abdin</footer>
 
     <!-- ### TEMPLATES ### -->
@@ -186,6 +125,19 @@
       {{> userDetails}}
       {{> userCard}}
       {{> userFriends}}
+    </script>
+
+    <script type="text/x-handlebars-template" id="saved-users-template">
+      <ol class="users-list">
+        {{#each names}}
+          <li class="users-list-item" data-id="{{this.id}}">
+            <i class="fa-solid fa-trash-can"></i>
+            {{this.name}}
+          </li>
+        {{else}}
+          <li class="users-list-item empty-users">NO SAVED USERS</li>
+        {{/each}}
+      </ol>
     </script>
     <!-- ################# -->
   </body>

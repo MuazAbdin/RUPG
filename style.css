@@ -89,6 +89,10 @@ body {
   background-color: var(--pakistan-green);
 }
 
+.nav-item-active {
+  background-color: var(--pakistan-green);
+}
+
 .nav-list-item__users {
   position: relative;
   width: 35%;
@@ -121,8 +125,31 @@ body {
   border-radius: var(--border-radius);
 }
 
-.users-list-item:hover {
+.users-list-item > i {
+  padding: 0.5rem;
+  margin-right: 1rem;
+  color: var(--red-dark);
+  text-shadow: 0px 0px 5px var(--red-light);
+  border-radius: 1rem;
+  transition: var(--transition);
+}
+
+.users-list-item > i:hover {
+  background-color: var(--red-dark);
+}
+.users-list-item:hover > i {
+  color: var(--red-light);
+}
+
+.users-list-item:not(.empty-users):hover {
   background-color: var(--pakistan-green);
+}
+
+.empty-users {
+  justify-self: center;
+  cursor: default;
+  color: var(--red-dark);
+  text-shadow: 0px 0px 10px var(--red-light);
 }
 
 .body-footer {
@@ -144,9 +171,10 @@ body {
   margin: 5px 0;
   background-color: #bfc5ae;
   display: grid;
-  grid-template-areas: "details ." "card friends";
-  grid-template-columns: 7fr 3fr;
-  grid-template-rows: 7rem 1fr;
+  grid-template-areas: "details details ." "card card friends";
+  grid-template-columns: 5fr 2fr 3fr;
+  /* grid-template-columns: 5fr 2fr 4rem; */
+  grid-template-rows: 9rem 1fr;
   gap: 1rem;
 }
 
@@ -185,8 +213,9 @@ body {
 }
 
 .friends-title {
-  font-size: 1.5rem;
-  color: var(--pakistan-green);
+  font-size: 2rem;
+  color: var(--dark-moss-green);
+  text-shadow: 2px 2px 2px var(--pakistan-green);
   font-weight: 700;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
@@ -194,6 +223,8 @@ body {
 }
 
 .friends-title > i {
+  color: black;
+  text-shadow: none;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 50px;
@@ -206,13 +237,13 @@ body {
   background-color: grey;
 }
 .hidden-friends {
-  transform: rotate(-90deg);
+  transform: rotate(-90deg) translate(-8rem, 0.5rem);
   transform-origin: bottom right;
   border-bottom: none;
 }
 
 .hidden-friends > i {
-  transform: rotate(90deg);
+  transform: rotate(90deg) translate(-0.75rem, -11.5rem);
 }
 
 .friends-list {
@@ -250,7 +281,7 @@ body {
 }
 
 .pokemon {
-  height: 7rem;
+  height: 9rem;
   gap: 2rem;
   border: 2px dotted var(--pakistan-green);
   border-radius: 1rem;
@@ -260,6 +291,7 @@ body {
   background-color: var(--grey-300);
   font-family: var(--title-font);
   letter-spacing: 0.25rem;
+  text-transform: capitalize;
 }
 
 .meat {
