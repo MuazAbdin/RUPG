@@ -2,7 +2,7 @@ class Controller {
   /* Attributes */
   #apiManager = null;
   #renderer = null;
-  #currentUser = {};
+  #currentUserID = "";
 
   /* Constructor */
   constructor() {
@@ -11,16 +11,18 @@ class Controller {
   }
 
   /* Private methods */
+  #generateUserID(count) {
+    return `u${count + 1}`;
+  }
+
   #isUserSaved(data) {
-    return !!data?.[this.#currentUser._id];
-    // return data && data[this.#currentUser._id];
+    return !!data?.[this.#currentUserID];
+    // return data && data[this.#currentUserID];
   }
 
   #fetchUsersFromStorage() {
     const EMPTY_USERS = JSON.stringify({ count: 0, data: {} });
     return JSON.parse(localStorage.getItem("users") || EMPTY_USERS);
-    // try { return JSON.parse(localStorage.getItem("users")); }
-    // catch (error) { return { count: 0, data: {} }; }
   }
 
   /* Public API */
@@ -28,21 +30,19 @@ class Controller {
     this.#apiManager
       .loadData()
       .then(() => {
-        const users = this.#fetchUsersFromStorage();
-        this.#currentUser = this.#apiManager.data;
-        this.#currentUser._id = `u${users.count + 1}`;
-        this.#renderer.render(this.#currentUser);
+        const count = this.#fetchUsersFromStorage().count;
+        this.#currentUserID = this.#generateUserID(count);
+        this.#renderer.render(this.#apiManager.data);
       })
       .catch((error) => console.log(error.message));
   }
 
   saveUser() {
-    if (JSON.stringify(this.#currentUser) === "{}") return;
+    if (this.#currentUserID === "") return;
     const users = this.#fetchUsersFromStorage();
     if (this.#isUserSaved(users.data)) return;
+    users.data[this.#currentUserID] = this.#apiManager.data;
     users.count++;
-    const { _id, ...user } = this.#currentUser;
-    users.data[_id] = user;
     localStorage.setItem("users", JSON.stringify(users));
   }
 
@@ -53,18 +53,14 @@ class Controller {
 
   loadUser(userID) {
     const userData = this.#fetchUsersFromStorage().data[userID];
-    this.#currentUser = userData;
-    this.#currentUser._id = userID;
+    this.#currentUserID = userID;
     this.#renderer.render(userData);
   }
 
   deleteUser(userID) {
     const users = this.#fetchUsersFromStorage();
     delete users.data[userID];
-    if (JSON.stringify(users.data) === "{}") {
-      this.#currentUser._id = "u1";
-      users.count = 0;
-    }
+    if (JSON.stringify(users.data) === "{}") users.count = 0;
     localStorage.setItem("users", JSON.stringify(users));
     this.showSavedUsers();
   }
