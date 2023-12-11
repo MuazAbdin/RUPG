@@ -60,6 +60,8 @@ body {
   height: 95%;
   padding: 5px;
   transition: var(--transition);
+  font-family: var(--main-font);
+  font-size: 1rem;
 }
 
 .logo:hover img {
@@ -166,7 +168,7 @@ body {
 }
 
 .user {
-  min-height: 70vh;
+  min-height: 80vh;
   padding: 1rem;
   margin: 5px 0;
   background-color: #bfc5ae;
@@ -262,32 +264,34 @@ body {
 }
 
 .quote blockquote p {
+  font-size: 1.35rem;
   line-height: 1.5rem;
   font-weight: 700;
   padding: 1rem 0;
   font-family: var(--handwrite-font);
   text-shadow: 1px 1px 5px gray;
+  text-align: center;
 }
 
 .quote blockquote .double-quotes {
-  font-size: xx-large;
+  font-size: 3rem;
   font-weight: 700;
   padding: 1rem;
 }
 
 .quote blockquote footer {
-  font-size: small;
+  font-size: 0.75rem;
   padding-left: 2rem;
 }
 
 .pokemon {
   height: 9rem;
-  gap: 2rem;
+  gap: 6rem;
   border: 2px dotted var(--pakistan-green);
   border-radius: 1rem;
   box-shadow: 0px 0px 15px var(--dark-moss-green);
   margin: 0 4rem;
-  font-size: large;
+  font-size: 1.75rem;
   background-color: var(--grey-300);
   font-family: var(--title-font);
   letter-spacing: 0.25rem;
@@ -300,4 +304,34 @@ body {
 }
 .meat > i {
   font-size: 3rem;
+}
+
+.flip-card {
+  background-color: transparent;
+  height: 100%;
+  perspective: 50rem;
+}
+
+.flip-card-inner {
+  position: relative;
+  height: 100%;
+  transition: transform 1.25s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  height: 90%;
+  width: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
 }

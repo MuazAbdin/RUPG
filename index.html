@@ -82,9 +82,19 @@
     </script>
 
     <script type="text/x-handlebars-template" id="pokemon-template">
-      <article class="pokemon c-flex">
-        <div class="img-container c-flex">
-          <img src="{{pokemon.picture}}" alt="Aser Avatar" />
+      <article
+        class="pokemon c-flex"
+        style="background-color: {{pokemon.color}}"
+      >
+        <div class="flip-card">
+          <div class="flip-card-inner c-flex">
+            <div class="img-container c-flex flip-card-front">
+              <img src="{{pokemon.frontFace}}" alt="Pokemon Sprite" />
+            </div>
+            <div class="img-container c-flex flip-card-back">
+              <img src="{{pokemon.backFace}}" alt="Pokemon Sprite" />
+            </div>
+          </div>
         </div>
         {{pokemon.name}}
       </article>

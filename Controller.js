@@ -2,7 +2,6 @@ class Controller {
   /* Attributes */
   #apiManager = null;
   #renderer = null;
-  #isUserLoaded = false;
   #currentUser = {};
 
   /* Constructor */
@@ -13,12 +12,15 @@ class Controller {
 
   /* Private methods */
   #isUserSaved(data) {
-    return data && data[this.#currentUser._id];
+    return !!data?.[this.#currentUser._id];
+    // return data && data[this.#currentUser._id];
   }
 
   #fetchUsersFromStorage() {
     const EMPTY_USERS = JSON.stringify({ count: 0, data: {} });
     return JSON.parse(localStorage.getItem("users") || EMPTY_USERS);
+    // try { return JSON.parse(localStorage.getItem("users")); }
+    // catch (error) { return { count: 0, data: {} }; }
   }
 
   /* Public API */
@@ -29,14 +31,13 @@ class Controller {
         const users = this.#fetchUsersFromStorage();
         this.#currentUser = this.#apiManager.data;
         this.#currentUser._id = `u${users.count + 1}`;
-        this.#isUserLoaded = true;
         this.#renderer.render(this.#currentUser);
       })
       .catch((error) => console.log(error.message));
   }
 
   saveUser() {
-    if (!this.#isUserLoaded) return;
+    if (JSON.stringify(this.#currentUser) === "{}") return;
     const users = this.#fetchUsersFromStorage();
     if (this.#isUserSaved(users.data)) return;
     users.count++;
@@ -51,7 +52,6 @@ class Controller {
   }
 
   loadUser(userID) {
-    this.#isUserLoaded = true;
     const userData = this.#fetchUsersFromStorage().data[userID];
     this.#currentUser = userData;
     this.#currentUser._id = userID;
