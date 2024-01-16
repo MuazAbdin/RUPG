@@ -7,9 +7,9 @@ class APIManager {
   }
 
   /* Private methods */
-  #handelRandomUserData(results) {
+  #handelRandomUserData(users) {
     this.#data.friends = [];
-    results.forEach((user, idx) => {
+    users.forEach((user, idx) => {
       if (idx === 0) {
         this.#data.user = {
           name: `${user.name.first} ${user.name.last}`,
@@ -55,7 +55,7 @@ class APIManager {
       "https://api.kanye.rest/",
       `https://pokeapi.co/api/v2/pokemon/${randID}`,
       `https://baconipsum.com/api/?type=all-meat&sentences=${NUM_SENTENCES}`,
-    ];
+    ].map((res) => $.get(res));
   }
 
   static #lightenNamedColor(name) {
@@ -81,19 +81,16 @@ class APIManager {
 
   /* Public Methods -The API- */
   loadData() {
-    return Promise.all(this.#getResources().map((res) => $.get(res)))
+    return Promise.all(this.#getResources())
       .then(([{ results }, { quote }, { name, species, sprites }, [text]]) => {
         this.#handelRandomUserData(results);
         this.#handelQuoteData(quote);
         this.#handelPokemonData(name, sprites, null);
         this.#handelBaconData(text);
-        // console.log(this.#data);
-        // return Promise.resolve(this.#data);
         return $.get(species.url);
       })
       .then(({ color }) => {
         this.#handelPokemonData(null, null, color);
-        // console.log(this.#data.pokemon);
       })
       .catch((error) => console.log(error.message));
   }
